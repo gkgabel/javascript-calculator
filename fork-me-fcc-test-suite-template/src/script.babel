@@ -1,0 +1,208 @@
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { string: "0", new: "0", string1: "0", dec: 0,op:0 };
+  }
+  input1 = t => {
+    var y={
+        new: (this.state.new + t).replace(/^0+/, ''),
+        string: (this.state.string + t).replace(/^0+/, ''),
+        string1: (this.state.string1 + t).replace(/^0+/, ''),
+        op:0
+      }
+    if(y.new=='')y={
+       new:'0',
+        string: (this.state.string + '0'),
+        string1: (this.state.string1 + '0'),
+        op:0
+    }
+      this.setState(y);
+  };
+
+  input2 = t =>
+  {if(this.state.op==0||(this.state.op&&t=='-'))
+    this.setState({
+      new: "",
+      string: this.state.string + t,
+      string1: this.state.string1 + t,
+      dec: 0,
+      op:this.state.op+1
+    });
+else
+   this.setState({
+      new: "",
+      string: this.state.string.slice(0,this.state.string.length-this.state.op) + t,
+      string1: this.state.string1 + t,
+      dec: 0,
+      op:this.state.op+1
+    });}
+  
+  input3 = () => {
+    this.setState({
+      string1: this.state.string1 + "=",
+      new: eval(this.state.string).toString(),
+      string:eval(this.state.string).toString(),
+      dec: 0,
+    });
+  };
+  input4 = () => {
+    if (this.state.dec == 0) {
+      this.setState({
+        new: this.state.new + ".",
+        string: this.state.string + ".",
+        string1: this.state.string1 + ".",
+        dec: this.state.dec + 1
+      });
+    }
+    
+  };
+  render() {
+    return (
+      <div>
+        <div>
+          <div id="display">{this.state.new}</div>
+          <div id="display">{this.state.string1}</div>
+        </div>
+        <div id="button">
+          <button
+            id="one"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(1)}
+          >
+            1{" "}
+          </button>
+          <button
+            id="two"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(2)}
+          >
+            2
+          </button>
+          <button
+            id="three"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(3)}
+          >
+            3
+          </button>
+          <button
+            id="four"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(4)}
+          >
+            4
+          </button>
+          <button
+            id="five"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(5)}
+          >
+            5
+          </button>
+          <button
+            id="six"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(6)}
+          >
+            6{" "}
+          </button>
+          <button
+            id="seven"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(7)}
+          >
+            7{" "}
+          </button>
+          <button
+            id="eight"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(8)}
+          >
+            8{" "}
+          </button>
+          <button
+            id="nine"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1(9)}
+          >
+            9{" "}
+          </button>
+          <button
+            id="zero"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input1("0")}
+          >
+            0{" "}
+          </button>
+          <button
+            id="add"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input2("+")}
+          >
+            +
+          </button>
+          <button
+            id="subtract"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input2("-")}
+          >
+            -
+          </button>
+          <button
+            id="multiply"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input2("*")}
+          >
+            *
+          </button>
+          <button
+            id="divide"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input2("/")}
+          >
+            /
+          </button>
+          <button
+            id="equals"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input3()}
+          >
+            =
+          </button>
+          <button
+            id="decimal"
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            onClick={() => this.input4()}
+          >
+            .
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-primary waves-effect"
+            id="clear"
+            onClick={() => this.setState({ new: '0', string: "", string1: "0" })}
+          >
+            AC
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
+ReactDOM.render(<App />, document.getElementById("main"));
